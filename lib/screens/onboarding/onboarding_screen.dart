@@ -20,8 +20,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingPage> pages = [
     OnboardingPage(
       title: 'Welcome to Food Pundit',
-      description: 'Your personal guide to understanding what\'s in your food',
-      image: 'assets/images/onboarding/thali.png',
+      description:
+          'Your personal guide to understanding what\'s in your food Packet',
+      image: 'assets/images/onboarding/thali-min.png',
       pattern: SplashPattern.waves,
     ),
     OnboardingPage(
@@ -35,21 +36,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       title: 'Ingredient Analysis',
       description:
           'Get in-depth information about ingredients, including benefits and potential allergens',
-      image: 'assets/images/onboarding/nutri_quality.jpg',
+      image: 'assets/images/onboarding/ingredient_analysis-min.png',
       pattern: SplashPattern.curves,
     ),
     OnboardingPage(
       title: 'Health Insights',
       description:
           'Make informed decisions with detailed nutritional facts and health impact analysis',
-      image: 'assets/images/onboarding/19197874.jpg',
+      image: 'assets/images/onboarding/health_insights-min.png',
       pattern: SplashPattern.dots,
     ),
     OnboardingPage(
       title: 'Start Your Journey',
       description:
           'Join us in making healthier food choices with knowledge at your fingertips',
-      image: 'assets/images/onboarding/healthy_family.png',
+      image: 'assets/images/onboarding/healthy_family-min.png',
       pattern: SplashPattern.lines,
     ),
   ];
