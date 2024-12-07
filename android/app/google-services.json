@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "555118069489",
+    "firebase_url": "https://openlabel-lab-firebase-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "openlabel-lab-firebase",
+    "storage_bucket": "openlabel-lab-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555118069489:android:c674f7f6b8540e7c63cb50",
+        "android_client_info": {
+          "package_name": "com.experimenter.ai.foodpundit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555118069489-jrptvfnnpi07ub09f6dbtu36as5f5fbq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.experimenter.ai.foodpundit",
+            "certificate_hash": "159e42f332b0f6828fc3193651d80d19b84a5dfa"
+          }
+        },
+        {
+          "client_id": "555118069489-8v6u60g9d6odi921dgoinvo29c8opb8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyvOAbPZhTif2KQBunJupHsQXH8HlW2kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555118069489-8v6u60g9d6odi921dgoinvo29c8opb8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
