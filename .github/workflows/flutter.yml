@@ -1,0 +1,87 @@
+# name: Flutter CI/CD
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       # Checkout the repository
+#       - name: Checkout
+#         uses: actions/checkout@v3
+
+#       # Install Flutter
+#       - name: Setup Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: 'stable'
+#           cache: true
+
+#       # Cache pub dependencies
+#       - name: Cache pub dependencies
+#         uses: actions/cache@v3
+#         with:
+#           path: ${{ env.PUB_CACHE }}
+#           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+#           restore-keys: ${{ runner.os }}-pub-
+
+#       # Install dependencies
+#       - name: Install dependencies
+#         run: flutter pub get
+
+#       # Analyze code
+#       - name: Analyze code
+#         run: flutter analyze
+
+#       # Run tests
+#       - name: Run tests
+#         run: flutter test --coverage
+
+#       # Build APK
+#       - name: Build APK
+#         run: flutter build apk --release
+
+#       # Upload APK as artifact
+#       - name: Upload APK
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: release-apk
+#           path: build/app/outputs/flutter-apk/app-release.apk
+#           retention-days: 7
+
+#       # Build App Bundle
+#       - name: Build App Bundle
+#         run: flutter build appbundle
+
+#       # Upload App Bundle
+#       - name: Upload App Bundle
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: release-bundle
+#           path: build/app/outputs/bundle/release/app-release.aab
+#           retention-days: 7
+
+#   deploy:
+#     needs: build
+#     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Download App Bundle
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: release-bundle
+
+#       - name: Release to Play Store
+#         uses: r0adkll/upload-google-play@v1
+#         with:
+#           serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_SERVICE_ACCOUNT_JSON }}
+#           packageName: com.foodpundit.app
+#           releaseFiles: app-release.aab
+#           track: internal

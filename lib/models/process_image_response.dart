@@ -60,7 +60,7 @@ class ProcessImageResponse {
       ingredients: ingredients,
       allergenDeclarations: productDetails?['allergen_declarations'] as String?,
       approximateServingsPerPack:
-          productDetails?['approximate_servings_per_pack'] as int?,
+          productDetails?['approximate_servings_per_pack'],
       batchNumber: productDetails?['batch_number'] as String?,
       bestBeforeDate: productDetails?['best_before_date'] as String?,
       dateOfManufacture: productDetails?['date_of_manufacture'] as String?,
@@ -72,7 +72,7 @@ class ProcessImageResponse {
       netQuantity: productDetails?['net_quantity'] as String?,
       rawIngredientsText: productDetails?['raw_ingredients_text'] as String?,
       servingSize: productDetails?['serving_size'] as String?,
-      servingsPerContainer: productDetails?['servings_per_container'] as int?,
+      servingsPerContainer: productDetails?['servings_per_container'],
       vegNonVegStatus: productDetails?['veg_non_veg_status'] as String?,
       legacyNutriScore: productDetails?['legacy_nutri_score'] as String?,
       novaGroup: productDetails?['nova_group'] as int?,

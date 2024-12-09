@@ -30,7 +30,7 @@ class Product {
   final String imageUrl;
   final DateTime scannedAt;
   final String? allergenDeclarations;
-  final int? approximateServingsPerPack;
+  final dynamic approximateServingsPerPack;
   final String? batchNumber;
   final String? bestBeforeDate;
   final String? dateOfManufacture;
@@ -42,7 +42,7 @@ class Product {
   final String? netQuantity;
   final String? rawIngredientsText;
   final String? servingSize;
-  final int? servingsPerContainer;
+  final dynamic servingsPerContainer;
   final String? vegNonVegStatus;
   final String? legacyNutriScore;
   final int? novaGroup;
@@ -140,6 +140,38 @@ class Product {
           .map((ingredient) => Ingredient.fromMap(ingredient))
           .toList(),
       aggregatedNutrients: entry['aggregated_nutrients'],
+    );
+  }
+
+  factory Product.fromMap(Map<String, dynamic> map, {String? id}) {
+    final List<dynamic> ingredientsData = map['ingredients'] ?? [];
+
+    return Product(
+      id: id ?? '',
+      productName: map['product_name'] ?? '',
+      imageUrl: map['image_url'] ?? '',
+      scannedAt: (map['timestamp'] as Timestamp).toDate(),
+      allergenDeclarations: map['allergen_declarations'],
+      approximateServingsPerPack: map['approximate_servings_per_pack'],
+      batchNumber: map['batch_number'],
+      bestBeforeDate: map['best_before_date'],
+      dateOfManufacture: map['date_of_manufacture'],
+      description: map['description'],
+      expiryDate: map['expiry_date'],
+      foodType: map['food_type'],
+      fssaiNumber: map['fssai_number'],
+      mrp: map['mrp'],
+      netQuantity: map['net_quantity'],
+      rawIngredientsText: map['raw_ingredients_text'],
+      servingSize: map['serving_size'],
+      servingsPerContainer: map['servings_per_container'],
+      vegNonVegStatus: map['veg_non_veg_status'],
+      legacyNutriScore: map['legacy_nutri_score'],
+      novaGroup: map['nova_group'],
+      ingredients: ingredientsData
+          .map((ingredient) => Ingredient.fromMap(ingredient))
+          .toList(),
+      aggregatedNutrients: map['aggregated_nutrients'],
     );
   }
 
