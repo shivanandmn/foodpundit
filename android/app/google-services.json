@@ -15,10 +15,55 @@
       },
       "oauth_client": [
         {
+          "client_id": "555118069489-6kqvn9h9cntls7uthicljmtb700gr8s0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.experimenter.ai.foodpundit",
+            "certificate_hash": "13277afded87b0a22d481e15198f4f3527755cca"
+          }
+        },
+        {
           "client_id": "555118069489-jrptvfnnpi07ub09f6dbtu36as5f5fbq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.experimenter.ai.foodpundit",
+            "certificate_hash": "159e42f332b0f6828fc3193651d80d19b84a5dfa"
+          }
+        },
+        {
+          "client_id": "555118069489-8v6u60g9d6odi921dgoinvo29c8opb8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyvOAbPZhTif2KQBunJupHsQXH8HlW2kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555118069489-8v6u60g9d6odi921dgoinvo29c8opb8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555118069489:android:d5d23509be3b106363cb50",
+        "android_client_info": {
+          "package_name": "com.experimenter.openlabel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555118069489-m87qe3hfolk1u64otemsv7fvtuaobk9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.experimenter.openlabel",
             "certificate_hash": "159e42f332b0f6828fc3193651d80d19b84a5dfa"
           }
         },
