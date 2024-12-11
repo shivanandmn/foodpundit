@@ -79,6 +79,20 @@ class NutritionFacts extends StatelessWidget {
     if (key == 'energy') {
       return '${value.toStringAsFixed(1)} kcal';
     }
-    return '${value.toStringAsFixed(3)} g';
+
+    // Handle very low values
+    if (value < 0.01) {
+      // For extremely low values, use scientific notation
+      return '${value.toStringAsExponential(2)} g';
+    } else if (value < 0.1) {
+      // For very low values, show 3 decimal places
+      return '${value.toStringAsFixed(3)} g';
+    } else if (value < 1) {
+      // For values less than 1, show 2 decimal places
+      return '${value.toStringAsFixed(2)} g';
+    } else {
+      // For values >= 1, show 1 decimal place
+      return '${value.toStringAsFixed(1)} g';
+    }
   }
 }

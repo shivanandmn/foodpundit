@@ -10,6 +10,8 @@ import '../../../models/process_image_response.dart';
 import '../../../models/error_response.dart';
 import 'dart:convert';
 import 'package:image/image.dart' as img;
+import 'package:heic_to_jpg/heic_to_jpg.dart';
+import 'dart:io';
 
 class CameraPageController extends ChangeNotifier {
   final CameraController cameraController;
@@ -103,34 +105,48 @@ class CameraPageController extends ChangeNotifier {
       debugPrint('🚀 Starting API call to process image...');
       final url = Uri.parse('$_baseUrl/$userId');
 
-      // Read image bytes
-      final imageBytes = await image.readAsBytes();
-      debugPrint(
-          '📸 Image read successfully, size: ${imageBytes.length} bytes');
-
       // Get file extension
       final String extension = image.path.split('.').last.toLowerCase();
-
-      // Convert image to JPEG if it's not already
       List<int> processedImageBytes;
-      if (extension != 'jpg' && extension != 'jpeg') {
-        debugPrint('🔄 Converting ${extension.toUpperCase()} image to JPEG...');
+
+      // Handle HEIC format first
+      if (extension == 'heic' || extension == 'heif') {
+        debugPrint('🔄 Converting HEIC image to JPEG...');
         try {
-          // Decode the image
-          final decodedImage = img.decodeImage(imageBytes);
-          if (decodedImage == null) {
-            throw Exception('Failed to decode image');
+          final String? jpgPath = await HeicToJpg.convert(image.path);
+          if (jpgPath == null) {
+            throw Exception('Failed to convert HEIC to JPEG');
           }
-          // Encode as JPEG
-          processedImageBytes = img.encodeJpg(decodedImage, quality: 85);
-          debugPrint('✅ Image converted to JPEG successfully');
+          processedImageBytes = await File(jpgPath).readAsBytes();
+          debugPrint('✅ HEIC image converted to JPEG successfully');
         } catch (e) {
-          debugPrint('❌ Error converting image: $e');
-          // Fallback to original bytes if conversion fails
-          processedImageBytes = imageBytes;
+          debugPrint('❌ Error converting HEIC: $e');
+          // Fallback to reading original bytes
+          processedImageBytes = await image.readAsBytes();
         }
       } else {
-        processedImageBytes = imageBytes;
+        // Handle other formats
+        final imageBytes = await image.readAsBytes();
+        debugPrint(
+            '📸 Image read successfully, size: ${imageBytes.length} bytes');
+
+        if (extension != 'jpg' && extension != 'jpeg') {
+          debugPrint(
+              '🔄 Converting ${extension.toUpperCase()} image to JPEG...');
+          try {
+            final decodedImage = img.decodeImage(imageBytes);
+            if (decodedImage == null) {
+              throw Exception('Failed to decode image');
+            }
+            processedImageBytes = img.encodeJpg(decodedImage, quality: 85);
+            debugPrint('✅ Image converted to JPEG successfully');
+          } catch (e) {
+            debugPrint('❌ Error converting image: $e');
+            processedImageBytes = imageBytes;
+          }
+        } else {
+          processedImageBytes = imageBytes;
+        }
       }
 
       final request = http.MultipartRequest('POST', url)
@@ -138,8 +154,7 @@ class CameraPageController extends ChangeNotifier {
           http.MultipartFile.fromBytes(
             'file',
             processedImageBytes,
-            filename:
-                '${image.name.split('.')[0]}.jpg', // Change extension to jpg
+            filename: '${image.name.split('.')[0]}.jpg',
             contentType: MediaType('image', 'jpeg'),
           ),
         )
