@@ -105,13 +105,17 @@ class CameraPageController extends ChangeNotifier {
       debugPrint(
           '📸 Image read successfully, size: ${imageBytes.length} bytes');
 
+      // Get file extension and determine content type
+      final String extension = image.path.split('.').last.toLowerCase();
+      final String mimeType = _getMimeType(extension);
+      
       final request = http.MultipartRequest('POST', url)
         ..files.add(
           http.MultipartFile.fromBytes(
             'file',
             imageBytes,
-            filename: 'image.jpg',
-            contentType: MediaType('image', 'jpeg'),
+            filename: image.name, // Use original filename
+            contentType: MediaType('image', mimeType),
           ),
         )
         ..fields['userId'] = userId;
@@ -152,6 +156,26 @@ class CameraPageController extends ChangeNotifier {
           message: 'Failed to process image: ${e.toString()}',
         ),
       );
+    }
+  }
+
+  // Helper method to determine MIME type
+  String _getMimeType(String extension) {
+    switch (extension) {
+      case 'heic':
+        return 'heic';
+      case 'heif':
+        return 'heif';
+      case 'png':
+        return 'png';
+      case 'gif':
+        return 'gif';
+      case 'webp':
+        return 'webp';
+      case 'jpg':
+      case 'jpeg':
+      default:
+        return 'jpeg';
     }
   }
 

@@ -79,6 +79,6 @@ class NutritionFacts extends StatelessWidget {
     if (key == 'energy') {
       return '${value.toStringAsFixed(1)} kcal';
     }
-    return '${value.toStringAsFixed(1)} g';
+    return '${value.toStringAsFixed(3)} g';
   }
 }
