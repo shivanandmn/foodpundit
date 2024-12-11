@@ -9,6 +9,7 @@ import 'package:foodpundit/models/error_code.dart';
 import '../../../models/process_image_response.dart';
 import '../../../models/error_response.dart';
 import 'dart:convert';
+import 'package:image/image.dart' as img;
 
 class CameraPageController extends ChangeNotifier {
   final CameraController cameraController;
@@ -101,21 +102,45 @@ class CameraPageController extends ChangeNotifier {
     try {
       debugPrint('🚀 Starting API call to process image...');
       final url = Uri.parse('$_baseUrl/$userId');
+
+      // Read image bytes
       final imageBytes = await image.readAsBytes();
       debugPrint(
           '📸 Image read successfully, size: ${imageBytes.length} bytes');
 
-      // Get file extension and determine content type
+      // Get file extension
       final String extension = image.path.split('.').last.toLowerCase();
-      final String mimeType = _getMimeType(extension);
-      
+
+      // Convert image to JPEG if it's not already
+      List<int> processedImageBytes;
+      if (extension != 'jpg' && extension != 'jpeg') {
+        debugPrint('🔄 Converting ${extension.toUpperCase()} image to JPEG...');
+        try {
+          // Decode the image
+          final decodedImage = img.decodeImage(imageBytes);
+          if (decodedImage == null) {
+            throw Exception('Failed to decode image');
+          }
+          // Encode as JPEG
+          processedImageBytes = img.encodeJpg(decodedImage, quality: 85);
+          debugPrint('✅ Image converted to JPEG successfully');
+        } catch (e) {
+          debugPrint('❌ Error converting image: $e');
+          // Fallback to original bytes if conversion fails
+          processedImageBytes = imageBytes;
+        }
+      } else {
+        processedImageBytes = imageBytes;
+      }
+
       final request = http.MultipartRequest('POST', url)
         ..files.add(
           http.MultipartFile.fromBytes(
             'file',
-            imageBytes,
-            filename: image.name, // Use original filename
-            contentType: MediaType('image', mimeType),
+            processedImageBytes,
+            filename:
+                '${image.name.split('.')[0]}.jpg', // Change extension to jpg
+            contentType: MediaType('image', 'jpeg'),
           ),
         )
         ..fields['userId'] = userId;
